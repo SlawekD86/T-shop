@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { ProductImage } from '../ProductImage/ProductImage';
 import OptionsForm from '../OptionForm/OptionForm';
+import { useMemo } from 'react';
 
 const Product = (props) => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
@@ -14,13 +15,17 @@ const Product = (props) => {
     return props.basePrice + currentPrice;
   };
 
+  const finalPrice = useMemo(getPrice, [currentPrice, props.basePrice]);
+
+
+
   const summary = (e) => {
     e.preventDefault();
     console.log("=== Summary ===");
     console.log("Name:", props.title);
     console.log("Size:", currentSize);
     console.log("Color:", currentColor);
-    console.log("Price:", getPrice());
+    console.log("Price:", finalPrice);
   };
 
   return (
